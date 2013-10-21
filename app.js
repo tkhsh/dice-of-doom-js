@@ -24,6 +24,11 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
+    $('#dummyButton').click(function () {
+        console.log("Attack");
+        // TODO: 攻撃の処理を行う関数を追加する。
+    });
+
     initGame();
     draw();
 })();
