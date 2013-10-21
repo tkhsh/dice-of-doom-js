@@ -4,10 +4,26 @@
     function initGame() {
         gameInfo.boardSize = 2; // board の一辺の長さ
         gameInfo.board = new Array(gameInfo.boardSize * gameInfo.boardSize);
+        gameInfo.players = ["A", "B"];
 
+        initBoard();
+    }
+
+    function initBoard () {
+        var minDiceNum = 1;
+        var maxDiceNum = 3;
         for (var i = 0; i < gameInfo.board.length; i++) {
-            // 表示を確かめるために、仮の文字（"□"）をいれる。
-            gameInfo.board[i] = "□";
+            gameInfo.board[i] = (function () {
+                var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum)) + minDiceNum;
+
+                var rndNum = Math.floor(Math.random() * (gameInfo.players.length - 1));
+                var selectedPlayer = gameInfo.players[rndNum];
+
+                return {
+                    dice: numberOfDices,
+                    player: selectedPlayer
+                };
+            })();
         }
     }
 
