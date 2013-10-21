@@ -45,6 +45,14 @@
         // TODO: 攻撃の処理を行う関数を追加する。
     });
 
+    function changeTurn(playerNumber) {
+        if(gameInfo.players.length === playerNumber + 1) {
+            return 0;
+        } else {
+            return playerNumber + 1;
+        }
+    }
+
     initGame();
     draw();
 })();
