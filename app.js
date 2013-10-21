@@ -14,9 +14,9 @@
         var maxDiceNum = 3;
         for (var i = 0; i < gameInfo.board.length; i++) {
             gameInfo.board[i] = (function () {
-                var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum)) + minDiceNum;
+                var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum + 1)) + minDiceNum;
 
-                var rndNum = Math.floor(Math.random() * (gameInfo.players.length - 1));
+                var rndNum = Math.floor(Math.random() * gameInfo.players.length);
                 var selectedPlayer = gameInfo.players[rndNum];
 
                 return {
