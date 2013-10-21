@@ -33,7 +33,10 @@
             boardString += "\n";
 
             for (var j = 0; j < gameInfo.boardSize; j++) {
-                boardString += gameInfo.board[i + (j * gameInfo.boardSize)];
+                var index = i + (j * gameInfo.boardSize);
+                var square = gameInfo.board[index];
+                var squareInfo = square.player + ":" + square.dice + " ";
+                boardString += squareInfo;
             }
         }
 
