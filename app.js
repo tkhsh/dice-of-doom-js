@@ -16,12 +16,11 @@
             gameInfo.board[i] = (function () {
                 var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum + 1)) + minDiceNum;
 
-                var rndNum = Math.floor(Math.random() * gameInfo.players.length);
-                var selectedPlayer = gameInfo.players[rndNum];
+                var playerNumber = Math.floor(Math.random() * gameInfo.players.length);
 
                 return {
                     dice: numberOfDices,
-                    player: selectedPlayer
+                    playerNumber: playerNumber
                 };
             })();
         }
@@ -35,7 +34,7 @@
             for (var j = 0; j < gameInfo.boardSize; j++) {
                 var index = j + (i * gameInfo.boardSize);
                 var square = gameInfo.board[index];
-                var squareInfo = square.player + ":" + square.dice + " ";
+                var squareInfo = gameInfo.players[square.playerNumber] + ":" + square.dice + " ";
                 boardString += squareInfo;
             }
         }
