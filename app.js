@@ -56,6 +56,16 @@
         }
     }
 
+    function listPossibleMoves(obj) {
+        var moves = [];
+
+        // TODO: 実装する
+        // makePossibleDirections(arg);
+        // canAttack(arg);
+
+        return moves;
+    }
+
     initGame();
     draw();
 })();
