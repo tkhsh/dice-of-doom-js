@@ -106,6 +106,20 @@
         return possibleDirections;
     }
 
+    function makeMoves(pos, possibleDirs) {
+        var player = gameInfo.board[pos].playerNumber;
+        var moves = [];
+
+        for (var i = 0; i < possibleDirs.length; i++) {
+            var possiblePos = possibleDirs[i];
+            if(player !== gameInfo.board[possiblePos].playerNumber) {
+                moves.push(possibleDirs[i]);
+            }
+        }
+
+        return moves;
+    }
+
     initGame();
     draw();
 })();
