@@ -48,11 +48,7 @@
     });
 
     function changeTurn(playerNumber) {
-        if(gameInfo.players.length === playerNumber + 1) {
-            return 0;
-        } else {
-            return playerNumber + 1;
-        }
+        return (playerNumber + 1) % gameInfo.players.length;
     }
 
     function listPossibleMoves(obj) {
