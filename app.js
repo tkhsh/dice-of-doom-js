@@ -47,7 +47,7 @@
         // TODO: 攻撃の処理を行う関数を追加する。
     });
 
-    function changeTurn(playerNumber) {
+    function getNextPlayerNumber(playerNumber) {
         return (playerNumber + 1) % gameInfo.players.length;
     }
 
