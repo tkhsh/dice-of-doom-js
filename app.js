@@ -67,27 +67,27 @@
     }
 
     function makePossibleDirections(pos) {
+        var boardSize = gameInfo.boardSize;
         var allDirections = [
-            pos-gameInfo.boardSize-1,
-            pos-gameInfo.boardSize,
+            pos-boardSize-1,
+            pos-boardSize,
             pos-1,
             pos+1,
-            pos+gameInfo.boardSize,
-            pos+gameInfo.boardSize+1
+            pos+boardSize,
+            pos+boardSize+1
         ];
 
         var impossibleDirections = [];
-        var bSize = gameInfo.boardSize;
 
-        if(0 <= pos < bSize) { // 最も上の行だった場合
+        if(0 <= pos < boardSize) { // 最も上の行だった場合
             impossibleDirections.push(0, 1);
-        } else if (bSize*(bSize-1) <= pos < gameInfo.board.length) { // 最も下の行だった場合
+        } else if (boardSize*(boardSize-1) <= pos < gameInfo.board.length) { // 最も下の行だった場合
             impossibleDirections.push(4, 5);
         }
 
-        if (pos%bSize === 0) { // 最も左の列だった場合
+        if (pos%boardSize === 0) { // 最も左の列だった場合
             impossibleDirections.push(0, 2);
-        } else if (pos%bSize === bSize-1) { // 最も右の列だった場合
+        } else if (pos%boardSize === boardSize-1) { // 最も右の列だった場合
             impossibleDirections.push(3, 5);
         }
 
@@ -96,7 +96,7 @@
             var index = impossibleDirections[i];
             allDirections[index] = null;
         }
-        
+
         var possibleDirections = [];
         for (var i = 0; i < allDirections.length; i++) {
             if (allDirections[i] !== null) {
