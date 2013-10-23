@@ -58,8 +58,8 @@
 
         for (var i = 0; i < gameInfo.board.length; i++) {
             if (playerNumber === gameInfo.board[i].playerNumber) {
-                var possiblePositions = listAdjacentHexPositions(i);
-                var movesFromTheSquare = makeMoves(i, possiblePositions);
+                var adjacentPositions = listAdjacentHexPositions(i);
+                var movesFromTheSquare = makeMoves(i, adjacentPositions);
 
                 if(movesFromTheSquare.length > 0) {
                     possibleMoves.push({
