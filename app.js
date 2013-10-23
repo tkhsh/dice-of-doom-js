@@ -115,13 +115,17 @@
     }
 
     function makeMoves(pos, possiblePositions) {
-        var player = gameInfo.board[pos].playerNumber;
+        var playerPos = gameInfo.board[pos];
         var moves = [];
 
         for (var i = 0; i < possiblePositions.length; i++) {
             var possiblePos = possiblePositions[i];
-            if(player !== gameInfo.board[possiblePos].playerNumber) {
-                moves.push(possiblePositions[i]);
+            var oppositePos = gameInfo.board[possiblePos];
+
+            if(playerPos.playerNumber !== oppositePos.playerNumber) {
+                if (playerPos.dice > oppositePos.dice) {
+                    moves.push(possiblePositions[i]);
+                }
             }
         }
 
