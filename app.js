@@ -61,9 +61,9 @@
         return moves;
     }
 
-    function makePossibleDirections(pos) {
+    function listAdjacentHexPositions(pos) {
         var boardSize = gameInfo.boardSize;
-        var allDirections = [
+        var allPositions = [
             pos-boardSize-1,
             pos-boardSize,
             pos-1,
@@ -72,44 +72,44 @@
             pos+boardSize+1
         ];
 
-        var impossibleDirections = [];
+        var impossiblePossitions = [];
 
         if(0 <= pos < boardSize) { // 最も上の行だった場合
-            impossibleDirections.push(0, 1);
+            impossiblePossitions.push(0, 1);
         } else if (boardSize*(boardSize-1) <= pos < gameInfo.board.length) { // 最も下の行だった場合
-            impossibleDirections.push(4, 5);
+            impossiblePossitions.push(4, 5);
         }
 
         if (pos%boardSize === 0) { // 最も左の列だった場合
-            impossibleDirections.push(0, 2);
+            impossiblePossitions.push(0, 2);
         } else if (pos%boardSize === boardSize-1) { // 最も右の列だった場合
-            impossibleDirections.push(3, 5);
+            impossiblePossitions.push(3, 5);
         }
 
-        // allDirections から impossibleDirections を取り除く
-        for (var i = 0; i < impossibleDirections.length; i++) {
-            var index = impossibleDirections[i];
-            allDirections[index] = null;
+        // allPositions から impossiblePossitions を取り除く
+        for (var i = 0; i < impossiblePossitions.length; i++) {
+            var index = impossiblePossitions[i];
+            allPositions[index] = null;
         }
 
-        var possibleDirections = [];
-        for (var i = 0; i < allDirections.length; i++) {
-            if (allDirections[i] !== null) {
-                possibleDirections.push(allDirections[i]);
+        var possiblePositions = [];
+        for (var i = 0; i < allPositions.length; i++) {
+            if (allPositions[i] !== null) {
+                possiblePositions.push(allPositions[i]);
             }
         }
 
-        return possibleDirections;
+        return possiblePositions;
     }
 
-    function makeMoves(pos, possibleDirs) {
+    function makeMoves(pos, possiblePositions) {
         var player = gameInfo.board[pos].playerNumber;
         var moves = [];
 
-        for (var i = 0; i < possibleDirs.length; i++) {
-            var possiblePos = possibleDirs[i];
+        for (var i = 0; i < possiblePositions.length; i++) {
+            var possiblePos = possiblePositions[i];
             if(player !== gameInfo.board[possiblePos].playerNumber) {
-                moves.push(possibleDirs[i]);
+                moves.push(possiblePositions[i]);
             }
         }
 
