@@ -75,7 +75,7 @@
 
     function listAdjacentHexPositions(pos) {
         var boardSize = gameInfo.boardSize;
-        var allPositions = [
+        var allAdjacentPositions = [
             pos-boardSize-1,
             pos-boardSize,
             pos-1,
@@ -84,34 +84,34 @@
             pos+boardSize+1
         ];
 
-        var impossiblePossitions = [];
+        var nonexistentPositions = [];
 
         if((0 <= pos) && (pos < boardSize)) { // 最も上の行だった場合
-            impossiblePossitions.push(0, 1);
+            nonexistentPositions.push(0, 1);
         } else if ((boardSize*(boardSize-1) <= pos) && (pos < gameInfo.board.length)) { // 最も下の行だった場合
-            impossiblePossitions.push(4, 5);
+            nonexistentPositions.push(4, 5);
         }
 
         if (pos%boardSize === 0) { // 最も左の列だった場合
-            impossiblePossitions.push(0, 2);
+            nonexistentPositions.push(0, 2);
         } else if (pos%boardSize === boardSize-1) { // 最も右の列だった場合
-            impossiblePossitions.push(3, 5);
+            nonexistentPositions.push(3, 5);
         }
 
-        // allPositions から impossiblePossitions を取り除く
-        for (var i = 0; i < impossiblePossitions.length; i++) {
-            var index = impossiblePossitions[i];
-            allPositions[index] = null;
+        // allAdjacentPositions から nonexistentPositions を取り除く
+        for (var i = 0; i < nonexistentPositions.length; i++) {
+            var index = nonexistentPositions[i];
+            allAdjacentPositions[index] = null;
         }
 
-        var possiblePositions = [];
-        for (var i = 0; i < allPositions.length; i++) {
-            if (allPositions[i] !== null) {
-                possiblePositions.push(allPositions[i]);
+        var adjacentPositions = [];
+        for (var i = 0; i < allAdjacentPositions.length; i++) {
+            if (allAdjacentPositions[i] !== null) {
+                adjacentPositions.push(allAdjacentPositions[i]);
             }
         }
 
-        return possiblePositions;
+        return adjacentPositions;
     }
 
     function makeMoves(pos, possiblePositions) {
