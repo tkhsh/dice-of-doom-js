@@ -74,9 +74,9 @@
 
         var impossiblePossitions = [];
 
-        if(0 <= pos < boardSize) { // 最も上の行だった場合
+        if((0 <= pos) && (pos < boardSize)) { // 最も上の行だった場合
             impossiblePossitions.push(0, 1);
-        } else if (boardSize*(boardSize-1) <= pos < gameInfo.board.length) { // 最も下の行だった場合
+        } else if ((boardSize*(boardSize-1) <= pos) && (pos < gameInfo.board.length)) { // 最も下の行だった場合
             impossiblePossitions.push(4, 5);
         }
 
