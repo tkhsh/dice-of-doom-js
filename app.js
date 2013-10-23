@@ -126,15 +126,15 @@
     }
 
     function makeMoves(pos, adjacentPositions) {
-        var playerPos = gameInfo.board[pos];
+        var playerSquare = gameInfo.board[pos];
         var moves = [];
 
         for (var i = 0; i < adjacentPositions.length; i++) {
             var adjacentPos = adjacentPositions[i];
-            var oppositePos = gameInfo.board[adjacentPos];
+            var oppositeSquare = gameInfo.board[adjacentPos];
 
-            if(playerPos.playerNumber !== oppositePos.playerNumber) {
-                if (playerPos.dice > oppositePos.dice) {
+            if(playerSquare.playerNumber !== oppositeSquare.playerNumber) {
+                if (playerSquare.dice > oppositeSquare.dice) {
                     moves.push(adjacentPositions[i]);
                 }
             }
