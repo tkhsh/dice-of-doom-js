@@ -53,14 +53,24 @@
         return (playerNumber + 1) % gameInfo.players.length;
     }
 
-    function listPossibleMoves(obj) {
-        var moves = [];
+    function listPossibleMoves(playerNumber) {
+        var possibleMoves = [];
 
-        // TODO: 実装する
-        // makePossibleDirections(arg);
-        // canAttack(arg);
+        for (var i = 0; i < gameInfo.board.length; i++) {
+            if (playerNumber === gameInfo.board[i].playerNumber) {
+                var possiblePositions = listAdjacentHexPositions(i);
+                var movesFromTheSquare = makeMoves(i, possiblePositions);
 
-        return moves;
+                if(movesFromTheSquare.length > 0) {
+                    possibleMoves.push({
+                        from: i,
+                        to: movesFromTheSquare
+                    });
+                }
+            }
+        }
+
+        return possibleMoves;
     }
 
     function listAdjacentHexPositions(pos) {
