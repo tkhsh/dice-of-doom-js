@@ -114,17 +114,17 @@
         return adjacentPositions;
     }
 
-    function makeMoves(pos, possiblePositions) {
+    function makeMoves(pos, adjacentPositions) {
         var playerPos = gameInfo.board[pos];
         var moves = [];
 
-        for (var i = 0; i < possiblePositions.length; i++) {
-            var possiblePos = possiblePositions[i];
-            var oppositePos = gameInfo.board[possiblePos];
+        for (var i = 0; i < adjacentPositions.length; i++) {
+            var adjacentPos = adjacentPositions[i];
+            var oppositePos = gameInfo.board[adjacentPos];
 
             if(playerPos.playerNumber !== oppositePos.playerNumber) {
                 if (playerPos.dice > oppositePos.dice) {
-                    moves.push(possiblePositions[i]);
+                    moves.push(adjacentPositions[i]);
                 }
             }
         }
