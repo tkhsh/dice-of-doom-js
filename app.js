@@ -44,6 +44,22 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
+    function showButtons(possibleMoves) {
+        for (var i = 0; i < possibleMoves.length; i++) {
+            var moveInfo = possibleMoves[i];
+            var installationElement = document.getElementById("uiButton");
+
+            for (var j = 0; j < moveInfo.to.length; j++) {
+                var buttonElement = document.createElement("input");
+                buttonElement.type = "button";
+                buttonElement.value = "From: " + moveInfo.from + " To: " + moveInfo.to[j];
+                // TODO: 攻撃の処理を行う関数を実装する。
+                // buttonElement.onclick = attack(moveInfo.from, moveInfo.to[j]);
+                installationElement.appendChild(buttonElement);
+            }
+        }
+    }
+
     $('#dummyButton').click(function () {
         console.log("Attack");
         // TODO: 攻撃の処理を行う関数を追加する。
@@ -134,4 +150,5 @@
 
     initGame();
     draw();
+    showButtons(listPossibleMoves(0));
 })();
