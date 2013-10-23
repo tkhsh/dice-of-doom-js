@@ -12,18 +12,20 @@
     function initBoard () {
         var minDiceNum = 1;
         var maxDiceNum = 3;
+
         for (var i = 0; i < gameInfo.board.length; i++) {
-            gameInfo.board[i] = (function () {
-                var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum + 1)) + minDiceNum;
-
-                var playerNumber = Math.floor(Math.random() * gameInfo.players.length);
-
-                return {
-                    dice: numberOfDices,
-                    playerNumber: playerNumber
-                };
-            })();
+            gameInfo.board[i] = initSquare(minDiceNum, maxDiceNum);
         }
+    }
+
+    function initSquare (minDiceNum, maxDiceNum) {
+        var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum + 1)) + minDiceNum;
+        var playerNumber = Math.floor(Math.random() * gameInfo.players.length);
+
+        return {
+            dice: numberOfDices,
+            playerNumber: playerNumber
+        };
     }
 
     function draw() {
