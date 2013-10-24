@@ -48,6 +48,7 @@
         deleteButtons();
 
         generateAttackButtons(possibleMoves);
+        generatePassButton();
     }
 
     function generateAttackButtons(possibleMoves) {
@@ -63,6 +64,17 @@
                 installationElement.appendChild(buttonElement);
             }
         }
+    }
+
+    function generatePassButton() {
+        var installationElement = document.getElementById("uiButton");
+
+        var passButton = document.createElement("input");
+        passButton.type = "button";
+        passButton.value = "TURN END";
+        // TODO: ターン終了の処理を行う関数を追加
+        // passButton.addEventListener("click", endTurn(), false);  
+        installationElement.appendChild(passButton);
     }
 
     function deleteButtons() {
