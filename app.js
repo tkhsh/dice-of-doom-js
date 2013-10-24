@@ -5,6 +5,7 @@
         gameInfo.boardSize = 2; // board の一辺の長さ
         gameInfo.board = new Array(gameInfo.boardSize * gameInfo.boardSize);
         gameInfo.players = ["A", "B"];
+        gameInfo.numOfRemovedDices = 0;
 
         initBoard();
     }
@@ -97,6 +98,9 @@
             // 陣地の変更
             gameInfo.board[to].playerNumber = gameInfo.board[from].playerNumber;
 
+            // 取り除かれたダイスの数を記録しておく。
+            gameInfo.numOfRemovedDices += gameInfo.board[to].dice;
+
             // ダイスの移動
             gameInfo.board[to].dice = gameInfo.board[from].dice - 1;
             gameInfo.board[from].dice = 1;
@@ -113,10 +117,32 @@
 
     function pass(playerNumber) {
         return function(e) {
+            if (gameInfo.numOfRemovedDices > 0) {
+                supply(playerNumber);
+            }
+
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
             var possibleMoves = listPossibleMoves(nextPlayerNum);
             showButtons(possibleMoves, nextPlayerNum, true);
         }
+    }
+
+    function supply(playerNumber) {
+        var resource = gameInfo.numOfRemovedDices;
+        for (var i = 0; i < gameInfo.board.length; i++) {
+            if ((playerNumber === gameInfo.board[i].playerNumber) && (gameInfo.board[i].dice < 3)){
+                gameInfo.board[i].dice += 1;
+                resource -= 1;
+                if (resource === 0) {
+                    break;
+                }
+            }
+        }
+
+        // 取り除かれたダイスの数を初期化する。
+        gameInfo.numOfRemovedDices = 0;
+
+        draw();
     }
 
     function getNextPlayerNumber(playerNumber) {
