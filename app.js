@@ -77,6 +77,12 @@
             // ダイスの移動
             gameInfo.board[to].dice = gameInfo.board[from].dice - 1;
             gameInfo.board[from].dice = 1;
+
+            // ボタンを再描画
+            generateButtons(gameInfo.board[from].playerNumber);
+
+            // 盤面を再描画
+            draw();
         }
     }
 
