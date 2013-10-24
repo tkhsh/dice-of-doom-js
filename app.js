@@ -44,7 +44,7 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
-    function generateButtons(possibleMoves) {
+    function showButtons(possibleMoves) {
         deleteButtons();
 
         generateAttackButtons(possibleMoves);
