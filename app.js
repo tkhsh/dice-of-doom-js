@@ -45,6 +45,8 @@
     }
 
     function generateButtons(possibleMoves) {
+        deleteButtons();
+
         for (var i = 0; i < possibleMoves.length; i++) {
             var moveInfo = possibleMoves[i];
             var installationElement = document.getElementById("uiButton");
@@ -56,6 +58,14 @@
                 buttonElement.addEventListener("click", attack(moveInfo.from, moveInfo.to[j]), false);
                 installationElement.appendChild(buttonElement);
             }
+        }
+    }
+
+    function deleteButtons() {
+        // 現在表示されているボタンを削除する。
+        var element = document.getElementById("uiButton");
+        while(element.firstChild) {
+            element.removeChild(element.firstChild);
         }
     }
 
