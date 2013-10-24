@@ -14,11 +14,11 @@
         var maxDiceNum = 3;
 
         for (var i = 0; i < gameInfo.board.length; i++) {
-            gameInfo.board[i] = initSquare(minDiceNum, maxDiceNum);
+            gameInfo.board[i] = initHex(minDiceNum, maxDiceNum);
         }
     }
 
-    function initSquare (minDiceNum, maxDiceNum) {
+    function initHex (minDiceNum, maxDiceNum) {
         var numberOfDices = Math.floor(Math.random() * (maxDiceNum - minDiceNum + 1)) + minDiceNum;
         var playerNumber = Math.floor(Math.random() * gameInfo.players.length);
 
@@ -35,9 +35,9 @@
 
             for (var j = 0; j < gameInfo.boardSize; j++) {
                 var index = j + (i * gameInfo.boardSize);
-                var square = gameInfo.board[index];
-                var squareInfo = gameInfo.players[square.playerNumber] + ":" + square.dice + " ";
-                boardString += squareInfo;
+                var hex = gameInfo.board[index];
+                var hexInfo = gameInfo.players[hex.playerNumber] + ":" + hex.dice + " ";
+                boardString += hexInfo;
             }
         }
 
@@ -70,12 +70,12 @@
         for (var i = 0; i < gameInfo.board.length; i++) {
             if (playerNumber === gameInfo.board[i].playerNumber) {
                 var adjacentPositions = listAdjacentHexPositions(i);
-                var movesFromTheSquare = makeMoves(i, adjacentPositions);
+                var movesFromTheHex = makeMoves(i, adjacentPositions);
 
-                if(movesFromTheSquare.length > 0) {
+                if(movesFromTheHex.length > 0) {
                     possibleMoves.push({
                         from: i,
-                        to: movesFromTheSquare
+                        to: movesFromTheHex
                     });
                 }
             }
@@ -126,15 +126,15 @@
     }
 
     function makeMoves(pos, adjacentPositions) {
-        var playerSquare = gameInfo.board[pos];
+        var playerHex = gameInfo.board[pos];
         var moves = [];
 
         for (var i = 0; i < adjacentPositions.length; i++) {
             var adjacentPos = adjacentPositions[i];
-            var oppositeSquare = gameInfo.board[adjacentPos];
+            var oppositeHex = gameInfo.board[adjacentPos];
 
-            if(playerSquare.playerNumber !== oppositeSquare.playerNumber) {
-                if (playerSquare.dice > oppositeSquare.dice) {
+            if(playerHex.playerNumber !== oppositeHex.playerNumber) {
+                if (playerHex.dice > oppositeHex.dice) {
                     moves.push(adjacentPositions[i]);
                 }
             }
