@@ -47,6 +47,10 @@
     function generateButtons(possibleMoves) {
         deleteButtons();
 
+        generateAttackButtons(possibleMoves);
+    }
+
+    function generateAttackButtons(possibleMoves) {
         for (var i = 0; i < possibleMoves.length; i++) {
             var moveInfo = possibleMoves[i];
             var installationElement = document.getElementById("uiButton");
