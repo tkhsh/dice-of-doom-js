@@ -59,17 +59,6 @@
         }
     }
 
-    function regenerateButtons(playerNumber) {
-        // 現在表示されているボタンを削除する。
-        var element = document.getElementById("uiButton");
-        while(element.firstChild) {
-            element.removeChild(element.firstChild);
-        }
-
-        showButtons(listPossibleMoves(playerNumber));
-        draw();
-    }
-
     function attack(from, to) {
         return function(e) {
             // 陣地の変更
@@ -78,8 +67,6 @@
             // ダイスの移動
             gameInfo.board[to].dice = gameInfo.board[from].dice - 1;
             gameInfo.board[from].dice = 1;
-
-            regenerateButtons(gameInfo.board[from].playerNumber);
         }
     }
 
