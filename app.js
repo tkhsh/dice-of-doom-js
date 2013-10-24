@@ -53,10 +53,22 @@
                 var buttonElement = document.createElement("input");
                 buttonElement.type = "button";
                 buttonElement.value = "From: " + moveInfo.from + " To: " + moveInfo.to[j];
-                // TODO: 攻撃の処理を行う関数を実装する。
-                // buttonElement.onclick = attack(moveInfo.from, moveInfo.to[j]);
+                buttonElement.addEventListener("click", attack(moveInfo.from, moveInfo.to[j]), false);
                 installationElement.appendChild(buttonElement);
             }
+        }
+    }
+
+    function attack(from, to) {
+        return function(e) {
+            // 陣地の変更
+            gameInfo.board[to].playerNumber = gameInfo.board[from].playerNumber;
+            
+            // ダイスの移動
+            gameInfo.board[to].dice = gameInfo.board[from].dice - 1;
+            gameInfo.board[from].dice = 1;
+
+            draw();
         }
     }
 
