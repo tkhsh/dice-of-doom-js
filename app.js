@@ -44,11 +44,19 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
-    function showButtons(possibleMoves, playerNumber) {
+    function showButtons(possibleMoves, playerNumber, isFirstMove) {
         deleteButtons();
 
         generateAttackButtons(possibleMoves);
-        generatePassButton(playerNumber);
+
+        if(isFirstMove) {
+            if(possibleMoves.length === 0) {
+                generatePassButton(playerNumber);
+            }
+        } else {
+            generatePassButton(playerNumber);
+        }
+
     }
 
     function generateAttackButtons(possibleMoves) {
@@ -96,7 +104,7 @@
             // ボタンを再描画
             var playerNumber = gameInfo.board[from].playerNumber;
             var possibleMoves = listPossibleMoves(playerNumber);
-            showButtons(possibleMoves, playerNumber);
+            showButtons(possibleMoves, playerNumber, false);
 
             // 盤面を再描画
             draw();
@@ -107,7 +115,7 @@
         return function(e) {
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
             var possibleMoves = listPossibleMoves(nextPlayerNum);
-            showButtons(possibleMoves, nextPlayerNum);
+            showButtons(possibleMoves, nextPlayerNum, true);
         }
     }
 
@@ -196,5 +204,5 @@
 
     initGame();
     draw();
-    showButtons(listPossibleMoves(0), 0);
+    showButtons(listPossibleMoves(0), 0, true);
 })();
