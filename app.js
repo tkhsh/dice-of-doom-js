@@ -44,7 +44,7 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
-    function showButtons(possibleMoves) {
+    function generateButtons(possibleMoves) {
         for (var i = 0; i < possibleMoves.length; i++) {
             var moveInfo = possibleMoves[i];
             var installationElement = document.getElementById("uiButton");
