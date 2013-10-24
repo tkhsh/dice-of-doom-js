@@ -44,11 +44,11 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
-    function showButtons(possibleMoves) {
+    function showButtons(possibleMoves, playerNumber) {
         deleteButtons();
 
         generateAttackButtons(possibleMoves);
-        generatePassButton();
+        generatePassButton(playerNumber);
     }
 
     function generateAttackButtons(possibleMoves) {
@@ -66,14 +66,13 @@
         }
     }
 
-    function generatePassButton() {
+    function generatePassButton(playerNumber) {
         var installationElement = document.getElementById("uiButton");
 
         var passButton = document.createElement("input");
         passButton.type = "button";
         passButton.value = "TURN END";
-        // TODO: ターン終了の処理を行う関数を追加
-        // passButton.addEventListener("click", endTurn(), false);  
+        passButton.addEventListener("click", pass(playerNumber), false);  
         installationElement.appendChild(passButton);
     }
 
@@ -95,10 +94,20 @@
             gameInfo.board[from].dice = 1;
 
             // ボタンを再描画
-            generateButtons(gameInfo.board[from].playerNumber);
+            var playerNumber = gameInfo.board[from].playerNumber;
+            var possibleMoves = listPossibleMoves(playerNumber);
+            showButtons(possibleMoves, playerNumber);
 
             // 盤面を再描画
             draw();
+        }
+    }
+
+    function pass(playerNumber) {
+        return function(e) {
+            var nextPlayerNum = getNextPlayerNumber(playerNumber);
+            var possibleMoves = listPossibleMoves(nextPlayerNum);
+            showButtons(possibleMoves, nextPlayerNum);
         }
     }
 
@@ -187,5 +196,5 @@
 
     initGame();
     draw();
-    showButtons(listPossibleMoves(0));
+    showButtons(listPossibleMoves(0), 0);
 })();
