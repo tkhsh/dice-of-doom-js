@@ -128,7 +128,7 @@
     }
 
     function supply(playerNumber) {
-        var resource = gameInfo.numOfRemovedDices;
+        var resource = gameInfo.numOfRemovedDices - 1;
         for (var i = 0; i < gameInfo.board.length; i++) {
             if ((playerNumber === gameInfo.board[i].playerNumber) && (gameInfo.board[i].dice < 3)){
                 gameInfo.board[i].dice += 1;
