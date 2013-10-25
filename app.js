@@ -136,6 +136,7 @@
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
             var possibleMoves = listPossibleMoves(nextPlayerNum);
             showButtons(possibleMoves, nextPlayerNum, true);
+            console.log(gameInfo.players[nextPlayerNum] + " のターンです。");
         }
     }
 
@@ -272,4 +273,5 @@
     initGame();
     draw();
     showButtons(listPossibleMoves(0), 0, true);
+    console.log(gameInfo.players[0] + " のターンです。");
 })();
