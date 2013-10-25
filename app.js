@@ -6,6 +6,7 @@
         gameInfo.board = new Array(gameInfo.boardSize * gameInfo.boardSize);
         gameInfo.players = ["A", "B"];
         gameInfo.numOfRemovedDices = 0;
+        gameInfo.numOfPasses = 0;
 
         initBoard();
     }
@@ -53,6 +54,14 @@
         if(isFirstMove) {
             if(possibleMoves.length === 0) {
                 generatePassButton(playerNumber);
+
+                // パスの回数を増やす
+                gameInfo.numOfPasses += 1;
+
+                // すべてのプレイヤーがパスしたら勝敗を判定
+                if (gameInfo.numOfPasses === gameInfo.players.length) {
+                    judgeGame();
+                }
             }
         } else {
             generatePassButton(playerNumber);
@@ -109,6 +118,9 @@
             var playerNumber = gameInfo.board[from].playerNumber;
             var possibleMoves = listPossibleMoves(playerNumber);
             showButtons(possibleMoves, playerNumber, false);
+
+            // パスの回数をリセット
+            gameInfo.numOfPasses = 0;
 
             // 盤面を再描画
             draw();
@@ -226,6 +238,35 @@
         }
 
         return moves;
+    }
+
+    function judgeGame() {
+        var scoresOfPlayers = new Array(gameInfo.players.length);
+        // 配列を数値型で初期化
+        for (var i = 0; i < scoresOfPlayers.length; i++) {
+            scoresOfPlayers[i] = 0;
+        }
+
+        // スコアを計算
+        for (var i = 0; i < gameInfo.board.length; i++) {
+            var owner0fTheHex = gameInfo.board[i].playerNumber;
+            scoresOfPlayers[owner0fTheHex] += 1;
+        }
+
+        // 一番スコアの高い人をみつける
+        var highScorePlayer = {
+            playerNum: 0,
+            score:scoresOfPlayers[0]
+        };
+
+        for (var i = 1; i < scoresOfPlayers.length; i++) {
+            if (highScorePlayer.score < scoresOfPlayers[i]) {
+                highScorePlayer.playerNum = i;
+                highScorePlayer.score = scoresOfPlayers[i];
+            }
+        }
+
+        console.log(gameInfo.players[highScorePlayer.playerNum] + " の勝ちです。");
     }
 
     initGame();
