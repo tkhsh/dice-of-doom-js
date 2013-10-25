@@ -117,7 +117,7 @@
 
     function pass(playerNumber) {
         return function(e) {
-            if (gameInfo.numOfRemovedDices > 0) {
+            if (gameInfo.numOfRemovedDices > 1) {
                 supply(playerNumber);
             }
 
