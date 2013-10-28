@@ -108,6 +108,12 @@
         return function(e) {
             attack(gameInfo.board, from, to);
 
+            // 取り除かれたダイスの数を記録しておく。
+            gameInfo.numOfRemovedDices += gameInfo.board[to].dice;
+
+            // パスの回数をリセット
+            gameInfo.numOfPasses = 0;
+
             // ボタンを再描画
             var playerNumber = gameInfo.board[from].playerNumber;
             startNewTurn(playerNumber, false);
@@ -121,15 +127,9 @@
         // 陣地の変更
         board[to].playerNumber = board[from].playerNumber;
 
-        // 取り除かれたダイスの数を記録しておく。
-        numOfRemovedDices += board[to].dice;
-
         // ダイスの移動
         board[to].dice = board[from].dice - 1;
         board[from].dice = 1;
-
-        // パスの回数をリセット
-        gameInfo.numOfPasses = 0;
     }
 
     function pass(playerNumber) {
