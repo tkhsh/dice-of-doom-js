@@ -130,6 +130,8 @@
         // ダイスの移動
         board[to].dice = board[from].dice - 1;
         board[from].dice = 1;
+
+        return board;
     }
 
     function pass(playerNumber) {
