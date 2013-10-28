@@ -140,11 +140,11 @@
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
             var possibleMoves = listPossibleMoves(nextPlayerNum);
 
-            if (nextPlayerNum === computerNum) {
-                ai(nextPlayerNum);
-            } else {
+            // if (nextPlayerNum === computerNum) {
+            //     ai(nextPlayerNum);
+            // } else {
                 showButtons(possibleMoves, nextPlayerNum, true);
-            }
+            // }
             console.log(gameInfo.players[nextPlayerNum] + " のターンです。");
         }
     }
@@ -286,8 +286,8 @@
             boardCopy[i] = gameInfo.board[i];
         }
 
-        var gameTree = makeGameTree(boardCopy, playerNumber, true);
-        var bestMove = searchBestMove(gameTree);
+        // var gameTree = makeGameTree(boardCopy, playerNumber, true);
+        // var bestMove = searchBestMove(gameTree);
 
         // TODO: 関数 attack の処理をもっと抽象化する。
         // attack(bestMove.from, bestMove.to);
@@ -297,7 +297,7 @@
         return {
             board: boardCopy,
             playerNumber: playerNumber,
-            moves: aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn);
+            moves: aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn)
         };
     }
 
@@ -311,7 +311,7 @@
                 for (var i = 0; i < tmpPossibleMoves.length; i++) {
                     var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
                     aiPosMoves.push(
-                        makeGameTree(playersAttackedBoard, playerNumber, false);
+                        makeGameTree(playersAttackedBoard, playerNumber, false)
                         );
                 }
                 ////////////////////////
@@ -336,7 +336,7 @@
             for (var i = 0; i < tmpPossibleMoves.length; i++) {
                 var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
                 aiPosMoves.push(
-                    makeGameTree(playersAttackedBoard, playerNumber, false);
+                    makeGameTree(playersAttackedBoard, playerNumber, false)
                     );
             }
             aiPosMoves.push(
