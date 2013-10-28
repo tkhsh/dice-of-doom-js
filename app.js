@@ -106,7 +106,7 @@
 
     function playersAttack(from, to) {
         return function(e) {
-            attack(from, to);
+            attack(gameInfo.board, from, to);
 
             // ボタンを再描画
             var playerNumber = gameInfo.board[from].playerNumber;
@@ -117,16 +117,16 @@
         }
     }
 
-    function attack(from, to) {
+    function attack(board, from, to) {
         // 陣地の変更
-        gameInfo.board[to].playerNumber = gameInfo.board[from].playerNumber;
+        board[to].playerNumber = board[from].playerNumber;
 
         // 取り除かれたダイスの数を記録しておく。
-        gameInfo.numOfRemovedDices += gameInfo.board[to].dice;
+        numOfRemovedDices += board[to].dice;
 
         // ダイスの移動
-        gameInfo.board[to].dice = gameInfo.board[from].dice - 1;
-        gameInfo.board[from].dice = 1;
+        board[to].dice = board[from].dice - 1;
+        board[from].dice = 1;
 
         // パスの回数をリセット
         gameInfo.numOfPasses = 0;
