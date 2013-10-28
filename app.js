@@ -49,7 +49,7 @@
     function startNewTurn(playerNumber, isFirstMove) {
         deleteButtons();
 
-        var possibleMoves = listPossibleMoves(playerNumber);
+        var possibleMoves = listPossibleMoves(gameInfo.board, playerNumber);
 
         generateAttackButtons(possibleMoves);
 
@@ -171,13 +171,13 @@
         return (playerNumber + 1) % gameInfo.players.length;
     }
 
-    function listPossibleMoves(playerNumber) {
+    function listPossibleMoves(board, playerNumber) {
         var possibleMoves = [];
 
-        for (var i = 0; i < gameInfo.board.length; i++) {
-            if (playerNumber === gameInfo.board[i].playerNumber) {
+        for (var i = 0; i < board.length; i++) {
+            if (playerNumber === board[i].playerNumber) {
                 var adjacentPositions = listAdjacentHexPositions(i);
-                var movesFromTheHex = makeMoves(i, adjacentPositions);
+                var movesFromTheHex = makeMoves(board, i, adjacentPositions);
 
                 if(movesFromTheHex.length > 0) {
                     possibleMoves.push({
@@ -232,13 +232,13 @@
         return adjacentPositions;
     }
 
-    function makeMoves(pos, adjacentPositions) {
-        var playerHex = gameInfo.board[pos];
+    function makeMoves(board, pos, adjacentPositions) {
+        var playerHex = board[pos];
         var moves = [];
 
         for (var i = 0; i < adjacentPositions.length; i++) {
             var adjacentPos = adjacentPositions[i];
-            var oppositeHex = gameInfo.board[adjacentPos];
+            var oppositeHex = board[adjacentPos];
 
             if(playerHex.playerNumber !== oppositeHex.playerNumber) {
                 if (playerHex.dice > oppositeHex.dice) {
@@ -303,7 +303,7 @@
 
     function aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn) {
         var aiPosMoves = [];
-        var tmpPossibleMoves = listPossibleMoves(playerNumber);
+        var tmpPossibleMoves = listPossibleMoves(boardCopy, playerNumber);
 
         if (isFirstMoveInTheTurn) {
             if (tmpPossibleMoves === 0) {
