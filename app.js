@@ -140,11 +140,7 @@
 
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
 
-            // if (nextPlayerNum === computerNum) {
-            //     ai(nextPlayerNum);
-            // } else {
-                startNewTurn(nextPlayerNum, true);
-            // }
+            startNewTurn(nextPlayerNum, true);
             console.log(gameInfo.players[nextPlayerNum] + " のターンです。");
         }
     }
@@ -281,10 +277,6 @@
 
     // AI //
     function ai(playerNumber) {
-        // var boardCopy = [];
-        // for (var i = 0; i < gameInfo.board.length; i++) {
-        //     boardCopy[i] = gameInfo.board[i];
-        // }
         var boardCopy = $.extend(true, [], gameInfo.board);
 
         var gameTree = makeGameTree(boardCopy, playerNumber, true);
