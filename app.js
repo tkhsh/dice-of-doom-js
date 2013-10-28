@@ -302,7 +302,6 @@
         if (isFirstMoveInTheTurn) {
             console.log("パスする場合");
             if (tmpPossibleMoves === 0) {
-                // パスする場合
                 aiPosMoves.push(
                     makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true, numOfPasses)
                     );
@@ -318,8 +317,6 @@
                 ///////
             } else {
                 console.log("手を指す場合（パス無し）");
-                // 手を打つ（パスはなし）場合
-                console.log("311------------------");
                 for (var i = 0; i < tmpPossibleMoves.length; i++) {
                     var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                     aiPosMoves.push(
@@ -330,7 +327,6 @@
             }
         } else {
             console.log("手を指す場合（パス有り）");
-            // 手を打つ（パスもあり）場合
             for (var i = 0; i < tmpPossibleMoves.length; i++) {
                 var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                 aiPosMoves.push(
