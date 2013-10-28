@@ -135,7 +135,12 @@
 
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
             var possibleMoves = listPossibleMoves(nextPlayerNum);
-            showButtons(possibleMoves, nextPlayerNum, true);
+
+            if (nextPlayerNum === computerNum) {
+                ai(nextPlayerNum);
+            } else {
+                showButtons(possibleMoves, nextPlayerNum, true);
+            }
             console.log(gameInfo.players[nextPlayerNum] + " のターンです。");
         }
     }
@@ -268,6 +273,79 @@
         }
 
         console.log(gameInfo.players[highScorePlayer.playerNum] + " の勝ちです。");
+    }
+
+    // AI //
+    function ai(playerNumber) {
+        var boardCopy = [];
+        for (var i = 0; i < gameInfo.board.length; i++) {
+            boardCopy[i] = gameInfo.board[i];
+        }
+
+        var gameTree = makeGameTree(boardCopy, playerNumber, true);
+        var bestMove = searchBestMove(gameTree);
+
+        // TODO: 関数 attack の処理をもっと抽象化する。
+        // attack(bestMove.from, bestMove.to);
+    }
+
+    function makeGameTree(boardCopy, playerNumber, isFirstMoveInTheTurn) {
+        return {
+            board: boardCopy,
+            playerNumber: playerNumber,
+            moves: aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn);
+        };
+    }
+
+    function aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn) {
+        var aiPosMoves = [];
+        var tmpPossibleMoves = listPossibleMoves(playerNumber);
+
+        if (isFirstMoveInTheTurn) {
+            if (tmpPossibleMoves === 0) {
+                // 手を打つ（パスはなし）場合
+                for (var i = 0; i < tmpPossibleMoves.length; i++) {
+                    var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
+                    aiPosMoves.push(
+                        makeGameTree(playersAttackedBoard, playerNumber, false);
+                        );
+                }
+                ////////////////////////
+            } else {
+                // パスする場合
+                aiPosMoves.push(
+                    makeGameTree(makeOppositeAttackedBoard(arg), getNextPlayerNumber(playerNumber), false)
+                    );
+
+                // パスの回数を増やす
+                gameInfo.numOfPasses += 1;
+
+                // すべてのプレイヤーがパスしたら、勝敗を決定する
+                if(gameInfo.numOfPasses === gameInfo.players.length) {
+                    judgeGame();
+                }
+
+                ///////
+            }
+        } else {
+            // 手を打つ（パスもあり）場合
+            for (var i = 0; i < tmpPossibleMoves.length; i++) {
+                var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
+                aiPosMoves.push(
+                    makeGameTree(playersAttackedBoard, playerNumber, false);
+                    );
+            }
+            aiPosMoves.push(
+                makeGameTree(makeOppositeAttackedBoard(arg), getNextPlayerNumber(playerNumber), false)
+                );
+            ////////////////////////
+        }
+
+        return aiPosMoves;
+    }
+
+    function makeOppositeAttackedBoard(arg) {
+
     }
 
     initGame();
