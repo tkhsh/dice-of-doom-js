@@ -311,16 +311,17 @@
             if (tmpPossibleMoves === 0) {
                 // パスする場合
                 aiPosMoves.push(
-                    makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), false)
+                    makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true)
                     );
 
                 // パスの回数を増やす
-                // gameInfo.numOfPasses += 1;
+                gameInfo.numOfPasses += 1;
 
                 // // すべてのプレイヤーがパスしたら、勝敗を決定する
-                // if(gameInfo.numOfPasses === gameInfo.players.length) {
-                //     judgeGame();
-                // }
+                if(gameInfo.numOfPasses === gameInfo.players.length) {
+                    // judgeGame();
+                    return;
+                }
                 ///////
             } else {
                 console.log("326");
@@ -344,7 +345,7 @@
                     );
             }
             aiPosMoves.push(
-                makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), false)
+                makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true)
                 );
             ////////////////////////
         }
