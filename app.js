@@ -46,8 +46,10 @@
         document.getElementById("display").innerHTML = boardString;
     }
 
-    function startNewTurn(possibleMoves, playerNumber, isFirstMove) {
+    function startNewTurn(playerNumber, isFirstMove) {
         deleteButtons();
+
+        var possibleMoves = listPossibleMoves(playerNumber);
 
         generateAttackButtons(possibleMoves);
 
@@ -108,8 +110,7 @@
 
             // ボタンを再描画
             var playerNumber = gameInfo.board[from].playerNumber;
-            var possibleMoves = listPossibleMoves(playerNumber);
-            startNewTurn(possibleMoves, playerNumber, false);
+            startNewTurn(playerNumber, false);
 
             // 盤面を再描画
             draw();
@@ -138,12 +139,11 @@
             }
 
             var nextPlayerNum = getNextPlayerNumber(playerNumber);
-            var possibleMoves = listPossibleMoves(nextPlayerNum);
 
             // if (nextPlayerNum === computerNum) {
             //     ai(nextPlayerNum);
             // } else {
-                startNewTurn(possibleMoves, nextPlayerNum, true);
+                startNewTurn(nextPlayerNum, true);
             // }
             console.log(gameInfo.players[nextPlayerNum] + " のターンです。");
         }
@@ -354,6 +354,6 @@
 
     initGame();
     draw();
-    startNewTurn(listPossibleMoves(0), 0, true);
+    startNewTurn(0, true);
     console.log(gameInfo.players[0] + " のターンです。");
 })();
