@@ -278,23 +278,24 @@
     // AI //
     function ai(playerNumber) {
         var boardCopy = $.extend(true, [], gameInfo.board);
+        var numOfPassesCopy = gameInfo.numOfPasses;
 
-        var gameTree = makeGameTree(boardCopy, playerNumber, true);
+        var gameTree = makeGameTree(boardCopy, playerNumber, true, numOfPassesCopy);
         // var bestMove = searchBestMove(gameTree);
         console.log(gameTree);
         // TODO: 関数 attack の処理をもっと抽象化する。
         // attack(bestMove.from, bestMove.to);
     }
 
-    function makeGameTree(boardCopy, playerNumber, isFirstMoveInTheTurn) {
+    function makeGameTree(boardCopy, playerNumber, isFirstMoveInTheTurn, numOfPasses) {
         return {
             board: boardCopy,
             playerNumber: playerNumber,
-            moves: aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn)
+            moves: aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn, numOfPasses)
         };
     }
 
-    function aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn) {
+    function aiListPossibleMoves(boardCopy, playerNumber, isFirstMoveInTheTurn, numOfPasses) {
         var aiPosMoves = [];
         var tmpPossibleMoves = listPossibleMoves(boardCopy, playerNumber);
 
@@ -303,14 +304,14 @@
             if (tmpPossibleMoves === 0) {
                 // パスする場合
                 aiPosMoves.push(
-                    makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true)
+                    makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true, numOfPasses)
                     );
 
                 // パスの回数を増やす
-                gameInfo.numOfPasses += 1;
+                numOfPasses += 1;
 
                 // // すべてのプレイヤーがパスしたら、勝敗を決定する
-                if(gameInfo.numOfPasses === gameInfo.players.length) {
+                if(numOfPasses === gameInfo.players.length) {
                     // judgeGame();
                     return;
                 }
@@ -322,7 +323,7 @@
                 for (var i = 0; i < tmpPossibleMoves.length; i++) {
                     var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                     aiPosMoves.push(
-                        makeGameTree(playersAttackedBoard, playerNumber, false)
+                        makeGameTree(playersAttackedBoard, playerNumber, false, numOfPasses)
                         );
                 }
                 ////////////////////////
@@ -333,11 +334,11 @@
             for (var i = 0; i < tmpPossibleMoves.length; i++) {
                 var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                 aiPosMoves.push(
-                    makeGameTree(playersAttackedBoard, playerNumber, false)
+                    makeGameTree(playersAttackedBoard, playerNumber, false, numOfPasses)
                     );
             }
             aiPosMoves.push(
-                makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true)
+                makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), true, numOfPasses)
                 );
             ////////////////////////
         }
