@@ -121,6 +121,7 @@
     }
 
     function attack(board, from, to) {
+        console.log("------------------");
         // 陣地の変更
         board[to].playerNumber = board[from].playerNumber;
 
@@ -280,14 +281,15 @@
 
     // AI //
     function ai(playerNumber) {
-        var boardCopy = [];
-        for (var i = 0; i < gameInfo.board.length; i++) {
-            boardCopy[i] = gameInfo.board[i];
-        }
+        // var boardCopy = [];
+        // for (var i = 0; i < gameInfo.board.length; i++) {
+        //     boardCopy[i] = gameInfo.board[i];
+        // }
+        var boardCopy = $.extend(true, [], gameInfo.board);
 
-        // var gameTree = makeGameTree(boardCopy, playerNumber, true);
+        var gameTree = makeGameTree(boardCopy, playerNumber, true);
         // var bestMove = searchBestMove(gameTree);
-
+        console.log(gameTree);
         // TODO: 関数 attack の処理をもっと抽象化する。
         // attack(bestMove.from, bestMove.to);
     }
@@ -305,41 +307,44 @@
         var tmpPossibleMoves = listPossibleMoves(boardCopy, playerNumber);
 
         if (isFirstMoveInTheTurn) {
+            console.log("310");
             if (tmpPossibleMoves === 0) {
+                // パスする場合
+                aiPosMoves.push(
+                    makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), false)
+                    );
+
+                // パスの回数を増やす
+                // gameInfo.numOfPasses += 1;
+
+                // // すべてのプレイヤーがパスしたら、勝敗を決定する
+                // if(gameInfo.numOfPasses === gameInfo.players.length) {
+                //     judgeGame();
+                // }
+                ///////
+            } else {
+                console.log("326");
                 // 手を打つ（パスはなし）場合
+                console.log("311------------------");
                 for (var i = 0; i < tmpPossibleMoves.length; i++) {
-                    var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
+                    var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                     aiPosMoves.push(
                         makeGameTree(playersAttackedBoard, playerNumber, false)
                         );
                 }
                 ////////////////////////
-            } else {
-                // パスする場合
-                aiPosMoves.push(
-                    makeGameTree(makeOppositeAttackedBoard(arg), getNextPlayerNumber(playerNumber), false)
-                    );
-
-                // パスの回数を増やす
-                gameInfo.numOfPasses += 1;
-
-                // すべてのプレイヤーがパスしたら、勝敗を決定する
-                if(gameInfo.numOfPasses === gameInfo.players.length) {
-                    judgeGame();
-                }
-
-                ///////
             }
         } else {
+            console.log("338");
             // 手を打つ（パスもあり）場合
             for (var i = 0; i < tmpPossibleMoves.length; i++) {
-                var playersAttackedBoard = aPossibleMove; // tmpPossibleMoves の手の一つをボードコピーに反映したい。。
+                var playersAttackedBoard = attack(boardCopy, tmpPossibleMoves[i].from, tmpPossibleMoves[i].to);
                 aiPosMoves.push(
                     makeGameTree(playersAttackedBoard, playerNumber, false)
                     );
             }
             aiPosMoves.push(
-                makeGameTree(makeOppositeAttackedBoard(arg), getNextPlayerNumber(playerNumber), false)
+                makeGameTree(makeOppositeAttackedBoard(boardCopy, playerNumber), getNextPlayerNumber(playerNumber), false)
                 );
             ////////////////////////
         }
@@ -347,12 +352,36 @@
         return aiPosMoves;
     }
 
-    function makeOppositeAttackedBoard(arg) {
+    function makeOppositeAttackedBoard(boardCopy, playerNumber) {
+        var oppositePlayerNumber = getNextPlayerNumber(playerNumber);
+        var possibleMoves = listPossibleMoves(boardCopy, oppositePlayerNumber);
 
+        if (possibleMoves.length > 0) {
+            var move = searchBestMove(boardCopy, playerNumber, possibleMoves);
+            return attack(boardCopy, move.from, move.to);
+        }
+        return boardCopy;
+    }
+
+    function searchBestMove(boardCopy, playerNumber, possibleMoves) {
+        // for (var i = 0; i < possibleMoves.length; i++) {
+        //     var moveInfo = possibleMoves[i];
+
+        //     var attackedBoard = attack(boardCopy, moveInfo.from, moveInfo.to);
+        //     var nextPossibleMoves = listPossibleMoves(attackedBoard, playerNumber);
+        // }
+
+        // 「優勢」の基準がよく理解できないため、仮にランダムで選択するものとする。
+        var rndNum = Math.floor(Math.random() * possibleMoves.length);
+        var bestMove = possibleMoves[rndNum];
+
+        return bestMove;
     }
 
     initGame();
     draw();
-    startNewTurn(0, true);
+    // startNewTurn(0, true);
+    console.log("377");
+    ai(0);
     console.log(gameInfo.players[0] + " のターンです。");
 })();
