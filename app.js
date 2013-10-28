@@ -75,14 +75,11 @@
         for (var i = 0; i < possibleMoves.length; i++) {
             var moveInfo = possibleMoves[i];
             var installationElement = document.getElementById("uiButton");
-
-            for (var j = 0; j < moveInfo.to.length; j++) {
-                var buttonElement = document.createElement("input");
-                buttonElement.type = "button";
-                buttonElement.value = "From: " + moveInfo.from + " To: " + moveInfo.to[j];
-                buttonElement.addEventListener("click", playersAttack(moveInfo.from, moveInfo.to[j]), false);
-                installationElement.appendChild(buttonElement);
-            }
+            var buttonElement = document.createElement("input");
+            buttonElement.type = "button";
+            buttonElement.value = "From: " + moveInfo.from + " To: " + moveInfo.to;
+            buttonElement.addEventListener("click", playersAttack(moveInfo.from, moveInfo.to), false);
+            installationElement.appendChild(buttonElement);
         }
     }
 
@@ -181,10 +178,10 @@
                 var adjacentPositions = listAdjacentHexPositions(i);
                 var movesFromTheHex = makeMoves(board, i, adjacentPositions);
 
-                if(movesFromTheHex.length > 0) {
+                for (var j = 0; j < movesFromTheHex.length; j++) {
                     possibleMoves.push({
                         from: i,
-                        to: movesFromTheHex
+                        to: movesFromTheHex[j]
                     });
                 }
             }
